@@ -1,0 +1,16 @@
+.ant-picker.ant-picker-range.ant-picker-borderless.date-range-picker.ant-picker-disabled>.ant-picker-input>input[disabled] {
+    color: black
+}
+
+
+.calendar-spinner .spin-text{
+    justify-self: center;
+}
+
+.spin-row {
+    justify-content: center;
+}
+
+.work-list-row{
+    justify-content: center;
+}

@@ -1,0 +1,7 @@
+.title-odpracovano {
+    margin-top: 0.5em;
+}
+
+.ant-typography+h3.ant-typography.title-mzda {
+    margin-top: 0px;
+}
