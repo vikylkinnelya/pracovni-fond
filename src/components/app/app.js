@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { Layout, Typography, Button, Row, Col } from 'antd'
 import Login from '../login'
+import Register from '../register';
 import DataPicker from '../data-picker';
 import WorkInfo from '../work-info';
 import WorkDaysList from '../work-days-list'
@@ -13,23 +14,30 @@ import { auth } from "../firebase";
 import './app.css';
 import 'antd/dist/antd.css';
 const { Header, Content, Footer } = Layout;
-const { Title } = Typography
+const { Title, Text } = Typography
 
 
 const App = ({ WorkService, setUser }) => {
-
-    const onLogOut = () => {
-        WorkService.logOut()
-    }
-    const [user] = useAuthState(auth)
+    const [user, loading, error] = useAuthState(auth)
+    const history = useHistory()
 
     useEffect(() => {
-        if (user) {
+        if (loading) {
+            return
+        }
+        if (user && !error) {
+            history.replace('/workhours')
             WorkService.getUser()
                 .then(res => setUser(res))
                 .catch(err => alert(err, 'login'))
         }
-    }, [user])
+    }, [user, loading])
+
+
+    const onLogOut = () => {
+        WorkService.logOut()
+        setUser(null)
+    }
 
     return (
         <Layout >
@@ -38,12 +46,20 @@ const App = ({ WorkService, setUser }) => {
                     <Login />
                 </Route>
 
-                <Route path='/workhours'>
+                <Route path='/register'>
+                    <Register />
+                </Route>
 
+                <Route path='/workhours'>
                     <Header>
                         <Row>
-                            <Col span={23}>
+                            <Col span={20}>
                                 <Title level={1}>Pracovni fond </Title>
+                            </Col>
+                            <Col span={3}>
+                                <Text level={5}>
+                                    {user != null && user.email}
+                                </Text>
                             </Col>
                             <Col span={1}>
                                 <Button onClick={() => onLogOut()}>

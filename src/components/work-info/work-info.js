@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Typography, Dropdown, Menu, Button } from 'antd';
+import { Typography, Dropdown, Menu, Button, Row } from 'antd';
 import WorkChart from '../work-chart';
 import WithWorkService from '../hoc/with-work-service';
 import { setWorkHoursTotal, setMonthToShow } from '../../actions';
@@ -18,7 +18,7 @@ const WorkInfo = ({ WorkService, user, monthToShow, workHoursTotal, setWorkHours
       .catch(err => alert(err))
   }, [user, WorkService, monthToShow, dateYear, setWorkHoursTotal, workHoursTotal, workList])
 
-  const monthsMenu = <Menu onClick = {({ key }) => setMonthToShow(key)}>
+  const monthsMenu = <Menu onClick={({ key }) => setMonthToShow(key)}>
     <Menu.Item key='0'>leden</Menu.Item>
     <Menu.Item key='1'>únor</Menu.Item>
     <Menu.Item key='2'>březen</Menu.Item>
@@ -40,17 +40,19 @@ const WorkInfo = ({ WorkService, user, monthToShow, workHoursTotal, setWorkHours
 
       <WorkChart />
 
-      <Title level={2} className="title-odpracovano">
-        Odpracovano v
-        <Dropdown overlay={monthsMenu} arrow>
-          <Button>
-            {monthsList[monthToShow]}
-          </Button>
-        </Dropdown>
+      <Row>
+        <Title level={2} className="title-odpracovano">
+          Odpracovano v
+          <Dropdown overlay={monthsMenu} arrow>
+            <Button className='btn-month'>
+              {monthsList[monthToShow]}
+            </Button>
+          </Dropdown>
 
-        : &nbsp;
-        {workHoursTotal} hodin
-      </Title>
+          : &nbsp;
+          {workHoursTotal} hodin
+        </Title>
+      </Row>
       <Title level={3} className='title-mzda'>
         Hruba mzda: &nbsp;
         {workHoursTotal * 106} kc

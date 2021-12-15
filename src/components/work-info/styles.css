@@ -5,3 +5,13 @@
 .ant-typography+h3.ant-typography.title-mzda {
     margin-top: 0px;
 }
+
+.ant-btn.btn-month {
+    line-height: 1.35;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 20px;
+    height: auto;
+    padding: 4px 10px;
+    margin: 0 5px 0 5px;
+}

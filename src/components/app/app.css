@@ -6,3 +6,13 @@
 .app-content {
   margin: 0 10% 0 10%;
 }
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+#root .ant-layout {
+  min-height: 100vh;
+}

@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Form, Input, Button } from 'antd';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import WithWorkService from '../hoc/with-work-service';
-import { setUser } from '../../actions';
-import { connect } from 'react-redux';
+import './styles.css'
 
-const Login = ({ WorkService, setUser }) => {
+const Login = ({ WorkService }) => {
 
     const { signInWithEmailAndPassword, signInWithGoogle } = WorkService
-    const [user, loading, error] = useAuthState(auth)
-
-    const history = useHistory()
-
-    useEffect(() => {
-        if (loading) {
-            return
-        }
-        if (user && !error) {
-            history.replace('/workhours')
-            WorkService.getUser()
-                .then(res => setUser(res))
-                .catch(err => alert(err, 'login'))
-        }
-    }, [user, loading])
-
+    const [ error] = useAuthState(auth)
+    
     const onFinish = (values) => {
         signInWithEmailAndPassword(values.username, values.password)
     }
     const onFinishFailed = () => {
-       alert(error)
+        alert(error)
     }
 
 
@@ -43,6 +28,7 @@ const Login = ({ WorkService, setUser }) => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
+            className='login-form'
         >
             <Form.Item
                 label="Username"
@@ -81,9 +67,5 @@ const Login = ({ WorkService, setUser }) => {
     )
 }
 
-const mapDispatchToProps = {
-    setUser
-}
 
-
-export default WithWorkService()(connect(null, mapDispatchToProps)(Login))
+export default WithWorkService()(Login)
